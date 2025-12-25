@@ -25,7 +25,6 @@ body {
     color: var(--text-main);
     font-family: var(--font-body);
     line-height: 1.5;
-    /* Чтобы "страничка" была по центру по вертикали, если контента мало, но у нас его много */
     min-height: 100vh;
     padding: 40px 20px;
 }
@@ -36,8 +35,8 @@ body {
     margin: 0 auto;
     background-color: var(--bg-card);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-    border-radius: var(--radius-main); /* Скругление углов самой "страницы" */
-    overflow: hidden; /* Чтобы дети не вылезали за радиус */
+    border-radius: var(--radius-main);
+    overflow: hidden;
     position: relative;
 }
 
@@ -82,46 +81,40 @@ body {
 
 /* ============ HERO БЛОК ============ */
 .hero {
-    position: relative; /* Чтобы позиционировать текст и подложку */
-    min-height: 600px;  /* Делаем блок высоким */
+    position: relative;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Центрируем текст по вертикали */
+    justify-content: center;
     padding: 60px 40px;
-    
-    /* Настройки фона */
-    /* ЗАМЕНИТЕ 'image.jpg' НА ПУТЬ К ВАШЕМУ ФОТО */
+    /* Фото агротехники */
     background-image: url('https://images.unsplash.com/photo-1625246333195-58197bd47f26?auto=format&fit=crop&w=1400&q=80'); 
-    background-size: cover;   /* Растягиваем фото на весь блок */
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
-    overflow: hidden; /* Чтобы размытие или эффекты не вылезали */
+    overflow: hidden;
 }
 
-/* Полупрозрачный слой, чтобы черный текст читался на любом фото */
 .hero__overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Градиент от белого (слева) к прозрачному (справа) 
-       Создает эффект "технологичной чистоты" и дает контраст тексту */
-    background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%);
+    /* Градиент: белый слева -> прозрачный справа */
+    background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.1) 100%);
     z-index: 1;
 }
 
-/* Контейнер для текста поднимаем выше слоя overlay */
 .hero__content {
     position: relative;
     z-index: 2;
-    max-width: 700px; /* Ограничиваем ширину текста, чтобы не растягивался на все фото */
+    max-width: 700px;
 }
 
 .hero__title {
     font-family: var(--font-heading);
-    font-size: 80px; /* Сделал заголовок крупнее для масштаба */
+    font-size: 80px;
     line-height: 0.9;
     font-weight: 700;
     margin-bottom: 30px;
@@ -134,74 +127,84 @@ body {
     font-weight: 500;
     line-height: 1.4;
     color: var(--text-main);
-    background: rgba(223, 255, 0, 0.3); /* Легкий акцентный фон под текстом (кислотный желтый) */
-    padding: 10px 0; /* Небольшие отступы, если фон виден */
-    display: inline-block; /* Фон только под текстом */
-    backdrop-filter: blur(5px); /* Модный эффект размытия (glassmorphism) */
+    background: rgba(223, 255, 0, 0.4); /* Кислотный акцент */
+    padding: 10px 10px;
+    display: inline-block;
+    backdrop-filter: blur(5px);
 }
-
-/* Адаптив для Hero */
-@media (max-width: 768px) {
-    .hero {
-        min-height: 400px;
-        padding: 40px 20px;
-    }
-    .hero__title {
-        font-size: 48px;
-    }
-    .hero__subtitle {
-        font-size: 18px;
-    }
-}
-
 
 /* ============ ОБЩИЕ СЕКЦИИ ============ */
 .section {
-    padding: 60px 40px;
+    padding: 80px 40px;
     border-top: 1px solid #EEEEEE;
 }
 
 .section__title {
     font-family: var(--font-heading);
-    font-size: 32px;
+    font-size: 40px;
     margin-bottom: 40px;
     text-transform: uppercase;
+    font-weight: 700;
 }
 
 /* ============ О ПРОДУКТЕ ============ */
-.about__content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-}
-
 .about__text {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 800px;
 }
 
-/* Простой слайдер */
+/* Слайдер (Carousel) */
 .slider {
     width: 100%;
-    overflow-x: auto;
-    border-radius: var(--radius-small);
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 60px;
+    border: none;
+    border-radius: 0;
 }
 
 .slider__track {
     display: flex;
-    gap: 20px;
-    padding-bottom: 10px;
+    align-items: center;
+    gap: 40px;
+    position: absolute;
+    left: 50%;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 
 .slider__item {
-    min-width: 300px;
-    height: 200px;
-    background-color: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-width: 500px;
+    height: 300px;
+    position: relative;
+    transition: all 0.5s ease;
+    opacity: 0.4;
+    transform: scale(0.85);
+    cursor: pointer;
     border-radius: var(--radius-small);
-    border: 1px solid #ddd;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.slider__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.slider__item.active {
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    border: 3px solid var(--accent-acid);
+    cursor: default;
 }
 
 /* ============ ПРЕИМУЩЕСТВА ============ */
@@ -218,14 +221,20 @@ body {
     gap: 15px;
     background: #FAFAFA;
     padding: 15px 25px;
-    border-radius: 50px; /* Полное скругление ("таблетка") */
+    border-radius: 50px;
     border: 1px solid #E0E0E0;
+    transition: transform 0.2s;
+}
+
+.features__item:hover {
+    transform: translateY(-2px);
+    border-color: var(--black);
 }
 
 .features__icon-wrapper {
     width: 40px;
     height: 40px;
-    background-color: var(--accent-acid); /* Фон как у шапки */
+    background-color: var(--accent-acid);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -236,7 +245,7 @@ body {
 .features__icon {
     width: 20px;
     height: 20px;
-    color: var(--black); /* Сама иконка черная */
+    color: var(--black);
 }
 
 .features__text {
@@ -247,26 +256,27 @@ body {
 /* ============ ОБЛАСТИ ПРИМЕНЕНИЯ ============ */
 .scopes__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .scopes__card {
-    padding: 30px;
+    padding: 40px;
     background: #FAFAFA;
     border: 1px solid #E0E0E0;
     border-radius: var(--radius-small);
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: 20px;
+    font-size: 24px;
     text-align: center;
-    transition: transform 0.2s;
+    transition: all 0.2s;
 }
 
 .scopes__card:hover {
     background: var(--accent-acid);
     border-color: var(--accent-acid);
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(223, 255, 0, 0.2);
 }
 
 /* ============ ПАРТНЕРЫ ============ */
@@ -283,90 +293,95 @@ body {
 }
 
 .partners__logo-box {
-    width: 150px;
+    width: 180px;
     height: 100px;
-    background: #EEE;
+    background: #F5F5F5;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-small);
-    font-size: 12px;
-    color: #888;
+    font-size: 14px;
+    font-weight: 600;
+    color: #999;
     flex-shrink: 0;
+    border: 1px dashed #CCC;
 }
 
 .partners__desc {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-gray);
     max-width: 800px;
+    margin-top: 10px;
 }
 
 /* ============ КОНТАКТЫ ============ */
 .contacts__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 0; /* Без gap, так как карта должна стыковаться или иметь свой паддинг */
     border-radius: var(--radius-main);
     overflow: hidden;
     background: #FAFAFA;
 }
 
 .contacts__info {
-    padding: 40px;
+    padding: 60px;
 }
 
 .contacts__person {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .contacts__label {
     font-size: 14px;
     color: var(--text-gray);
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .contacts__value {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
 }
 
 .contacts__link {
     display: block;
     color: var(--text-main);
     text-decoration: none;
-    font-size: 18px;
-    margin-bottom: 5px;
-    border-bottom: 1px solid transparent;
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid transparent;
     width: fit-content;
+    transition: all 0.2s;
 }
 
 .contacts__link:hover {
-    border-bottom-color: var(--accent-acid);
     background-color: var(--accent-acid);
+    padding: 0 5px;
+    margin-left: -5px;
 }
 
 .contacts__company {
     font-weight: 700;
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .contacts__details {
     list-style: none;
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-gray);
-}
-
-.contacts__details li {
-    margin-bottom: 5px;
+    line-height: 1.8;
 }
 
 .contacts__map {
     position: relative;
-    min-height: 400px;
+    min-height: 500px;
+    background: #EEE;
 }
 
-/* iframe внутри карты */
 .contacts__map iframe {
     position: absolute;
     top: 0;
@@ -385,40 +400,34 @@ body {
 
 .footer__copyright {
     font-size: 14px;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* ============ АДАПТИВНОСТЬ ============ */
 @media (max-width: 992px) {
-    .hero {
-        grid-template-columns: 1fr;
-    }
-    .about__content {
-        grid-template-columns: 1fr;
-    }
-    .contacts__grid {
-        grid-template-columns: 1fr;
-    }
-    .contacts__map {
-        min-height: 300px;
-    }
+    .hero { min-height: 500px; }
+    .hero__title { font-size: 60px; }
+    .contacts__grid { grid-template-columns: 1fr; }
+    .contacts__map { height: 400px; min-height: 400px; }
 }
 
 @media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        gap: 20px;
-    }
-    .header__nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .hero__title {
-        font-size: 40px;
-    }
-    .partners__item {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+    body { padding: 10px; }
+    .page__container { border-radius: 16px; }
+    
+    .header { flex-direction: column; gap: 20px; padding: 20px; }
+    .header__nav { flex-wrap: wrap; justify-content: center; gap: 15px; }
+    
+    .hero { padding: 40px 20px; min-height: 450px; }
+    .hero__title { font-size: 40px; }
+    .hero__subtitle { font-size: 18px; }
+    
+    .section { padding: 50px 20px; }
+    .section__title { font-size: 32px; }
+    
+    .slider { height: 300px; }
+    .slider__item { min-width: 280px; height: 200px; }
+    
+    .partners__item { flex-direction: column; align-items: center; text-align: center; }
+    .contacts__info { padding: 30px; }
 }

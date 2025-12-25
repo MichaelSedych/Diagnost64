@@ -4,20 +4,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>АгроДиагност — Диагностическое оборудование</title>
-    <!-- Подключение шрифтов Space Grotesk и Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        :root {
+            --bg-page: #F0F2F5;
+            --bg-card: #FFFFFF;
+            --accent-acid: #DFFF00;
+            --text-main: #0F0F0F;
+            --text-gray: #555555;
+            --black: #000000;
+            
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --radius-main: 24px;
+            --radius-small: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.5;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* КОНТЕЙНЕР (ПК) */
+        .page__container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.15);
+            border-radius: var(--radius-main);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- ШАПКА --- */
+        .header {
+            background-color: var(--accent-acid);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* Скругления только снизу на ПК */
+            border-bottom-left-radius: var(--radius-main);
+            border-bottom-right-radius: var(--radius-main);
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 4px 15px rgba(200, 220, 0, 0.3);
+        }
+        .header__logo { font-family: var(--font-heading); font-weight: 700; font-size: 24px; text-transform: uppercase; z-index: 102; /* Поверх меню */ }
+        
+        /* Меню (ПК) */
+        .header__nav { display: flex; gap: 30px; }
+        .header__link { text-decoration: none; color: var(--text-main); font-weight: 500; font-size: 16px; transition: 0.2s; }
+        .header__link:hover { opacity: 0.6; }
+
+        /* БУРГЕР (Скрыт на ПК) */
+        .burger-btn { display: none; background: none; border: none; cursor: pointer; z-index: 102; width: 30px; height: 30px; position: relative; }
+        .burger-btn span { display: block; width: 100%; height: 3px; background: var(--black); margin-bottom: 5px; transition: 0.3s; }
+
+        /* --- HERO --- */
+        .hero {
+            position: relative; min-height: 600px; display: flex; flex-direction: column; justify-content: center; padding: 60px 40px;
+            background-image: url('https://images.unsplash.com/photo-1625246333195-58197bd47f26?auto=format&fit=crop&w=1400&q=80');
+            background-size: cover; background-position: center;
+        }
+        .hero__overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 40%, rgba(255,255,255,0.1) 100%); z-index: 1; }
+        .hero__content { position: relative; z-index: 2; max-width: 700px; }
+        .hero__title { font-family: var(--font-heading); font-size: 80px; line-height: 0.9; font-weight: 700; margin-bottom: 30px; text-transform: uppercase; word-wrap: break-word; }
+        .hero__subtitle { font-size: 24px; font-weight: 500; background: rgba(223, 255, 0, 0.4); padding: 10px; display: inline-block; backdrop-filter: blur(5px); }
+
+        /* --- СЕКЦИИ --- */
+        .section { padding: 80px 40px; border-top: 1px solid #EEEEEE; }
+        .section__title { font-family: var(--font-heading); font-size: 40px; margin-bottom: 40px; text-transform: uppercase; font-weight: 700; }
+
+        /* --- О ПРОДУКТЕ --- */
+        .about__grid { display: flex; flex-direction: column; gap: 40px; }
+        .about__text { font-size: 20px; line-height: 1.6; margin-bottom: 20px; max-width: 900px; }
+
+        /* СЛАЙДЕР */
+        .slider-simple { width: 100%; max-width: 800px; margin: 0 auto; position: relative; border-radius: var(--radius-small); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .slider-simple__container { position: relative; height: 500px; background: #000; }
+        .slider-simple__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s ease-in-out; }
+        .slider-simple__img.fade { opacity: 0.5; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 60px; height: 60px; background-color: var(--accent-acid); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.2s; z-index: 10; }
+        .slider-btn:hover { background-color: #fff; transform: translateY(-50%) scale(1.1); }
+        .slider-btn svg { width: 24px; height: 24px; stroke: var(--black); }
+        .slider-btn--prev { left: 20px; }
+        .slider-btn--next { right: 20px; }
+        .slider-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
+        .slider-dot { width: 12px; height: 12px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; transition: 0.2s; }
+        .slider-dot.active { background: var(--accent-acid); transform: scale(1.2); }
+
+        /* --- ПРЕИМУЩЕСТВА --- */
+        .features__list { list-style: none; display: flex; flex-wrap: wrap; gap: 20px; }
+        .features__item { display: flex; align-items: center; gap: 15px; background: #FAFAFA; padding: 15px 25px; border-radius: 50px; border: 1px solid #E0E0E0; }
+        .features__icon-wrapper { width: 40px; height: 40px; background-color: var(--accent-acid); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        
+        /* --- ОСТАЛЬНОЕ --- */
+        .scopes__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .scopes__card { padding: 40px; background: #FAFAFA; border: 1px solid #E0E0E0; border-radius: var(--radius-small); font-family: var(--font-heading); font-weight: 700; font-size: 24px; text-align: center; transition: 0.2s; }
+        
+        .partners__item { display: flex; gap: 30px; margin-bottom: 40px; }
+        .partners__logo-box { width: 180px; height: 100px; background: #F5F5F5; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-small); border: 1px dashed #CCC; font-weight: 600; flex-shrink: 0; }
+        
+        .contacts__grid { display: grid; grid-template-columns: 1fr 1fr; background: #FAFAFA; border-radius: var(--radius-main); overflow: hidden; }
+        .contacts__info { padding: 60px; }
+        .contacts__value { font-size: 24px; font-weight: 700; margin-bottom: 15px; word-wrap: break-word; }
+        .footer { background: var(--black); color: #fff; padding: 30px; text-align: center; }
+
+        /* ========================================= */
+        /* АДАПТИВ (ТЕЛЕФОНЫ И ПЛАНШЕТЫ) */
+        /* ========================================= */
+        @media (max-width: 992px) {
+            body {
+                padding: 0;
+                background-color: var(--bg-card); /* Фон страницы белый, как карточка */
+            }
+
+            .page__container {
+                max-width: 100%;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            /* Шапка мобильная */
+            .header {
+                padding: 15px 20px;
+                border-radius: 0; /* Убираем скругления */
+                position: fixed; /* Фиксируем намертво */
+                width: 100%;
+            }
+
+            .header__logo { font-size: 18px; }
+
+            /* БУРГЕР МЕНЮ */
+            .burger-btn { display: block; }
+            
+            .header__nav {
+                position: fixed;
+                top: 0; right: 0;
+                width: 100%; height: 100vh;
+                background: rgba(255,255,255,0.98);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                transform: translateX(100%); /* Скрыто справа */
+                transition: transform 0.3s ease;
+                z-index: 101;
+            }
+            
+            .header__nav.active {
+                transform: translateX(0); /* Выезжает */
+            }
+            
+            .header__link { font-size: 24px; font-weight: 700; color: var(--black); }
+
+            /* HERO */
+            .hero { padding: 100px 20px 60px; min-height: auto; text-align: center; }
+            .hero__title { font-size: 42px; line-height: 1.1; margin-bottom: 20px; }
+            .hero__subtitle { font-size: 18px; padding: 5px 10px; }
+            .hero__content { width: 100%; }
+
+            /* СЕКЦИИ */
+            .section { padding: 60px 20px; }
+            .section__title { font-size: 32px; text-align: center; word-wrap: break-word; }
+
+            /* Текст по центру */
+            .about__text { text-align: center; font-size: 16px; }
+            
+            /* Слайдер */
+            .slider-simple__container { height: 300px; }
+            .slider-btn { width: 40px; height: 40px; }
+
+            /* Преимущества по центру */
+            .features__list { justify-content: center; }
+            
+            /* Партнеры по центру */
+            .partners__item { flex-direction: column; align-items: center; text-align: center; }
+            
+            /* Контакты в одну колонку */
+            .contacts__grid { grid-template-columns: 1fr; border-radius: 0; }
+            .contacts__info { padding: 40px 20px; } 
+            /* Контакты НЕ центрируем (по просьбе), но адаптируем размер */
+            .contacts__value { font-size: 20px; }
+            
+            /* Карта */
+            .contacts__map-wrapper iframe { height: 400px; }
+        }
+    </style>
 </head>
 <body class="page">
 
     <main class="page__container">
         
-        <!-- Шапка -->
         <header class="header">
             <div class="header__logo">АГРОДИАГНОСТ</div>
-            <nav class="header__nav">
+            
+            <!-- Кнопка Бургера -->
+            <button class="burger-btn" id="burgerBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Навигация -->
+            <nav class="header__nav" id="navMenu">
                 <a href="#product" class="header__link">О продукте</a>
                 <a href="#features" class="header__link">Преимущества</a>
                 <a href="#partners" class="header__link">Партнёры</a>
@@ -25,179 +225,212 @@
             </nav>
         </header>
 
-        <!-- Hero блок -->
         <section class="hero">
-            <div class="hero__overlay"></div> <!-- Затемнение/осветление для читаемости -->
+            <div class="hero__overlay"></div>
             <div class="hero__content">
                 <h1 class="hero__title">АГРОДИАГНОСТ</h1>
-                <p class="hero__subtitle">
-                    Диагностическое оборудование<br>
-                    для сельскохозяйственной техники
-                </p>
+                <p class="hero__subtitle">Диагностическое оборудование<br>для сельскохозяйственной техники</p>
             </div>
         </section>
 
-        <!-- О продукте + Слайдер -->
+        <!-- О ПРОДУКТЕ -->
         <section id="product" class="section about">
             <div class="section__header">
                 <h2 class="section__title">О продукте</h2>
             </div>
-            <div class="about__content">
-                <p class="about__text">
-                    «АгроДиагност» направлен на разработку отечественного диагностического устройства для электрических систем сельскохозяйственной техники.
-                    Устройство предназначено для диагностики электросистем тракторов, комбайнов и другой мобильной техники, что делает его востребованным в агропромышленном комплексе, где важно обеспечить бесперебойную работу машин в сезон полевых работ.
-                </p>
+            
+            <div class="about__grid">
+                <div class="about__text-block">
+                    <p class="about__text">
+                        «АгроДиагност» направлен на разработку отечественного диагностического устройства для электрических систем сельскохозяйственной техники.
+                    </p>
+                    <p class="about__text">
+                        Устройство предназначено для диагностики электросистем тракторов, комбайнов и другой мобильной техники.
+                    </p>
+                </div>
                 
-                <!-- Простой CSS-слайдер (горизонтальный скролл) -->
-                <div class="slider">
-                    <div class="slider__track">
-                        <div class="slider__item">Фото устройства 1</div>
-                        <div class="slider__item">Фото устройства 2</div>
-                        <div class="slider__item">Фото устройства 3</div>
+                <!-- СЛАЙДЕР -->
+                <div class="slider-simple">
+                    <div class="slider-simple__container">
+                        <img id="sliderImage" src="" alt="Слайд" class="slider-simple__img">
+                        <button class="slider-btn slider-btn--prev" id="prevBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        <button class="slider-btn slider-btn--next" id="nextBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                        <div class="slider-dots" id="sliderDots"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Преимущества -->
+        <!-- ПРЕИМУЩЕСТВА -->
         <section id="features" class="section features">
             <div class="section__header">
-                <h2 class="section__title">Преимущества решения</h2>
+                <h2 class="section__title">Преимущества</h2>
             </div>
             <ul class="features__list">
-                <!-- Пункт 1: Интерфейс -->
                 <li class="features__item">
                     <div class="features__icon-wrapper">
-                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
                     </div>
                     <span class="features__text">Удобный интерфейс</span>
                 </li>
-                <!-- Пункт 2: Безопасность -->
                 <li class="features__item">
                     <div class="features__icon-wrapper">
-                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     </div>
-                    <span class="features__text">Безопасное подключение</span>
+                    <span class="features__text">Безопасность</span>
                 </li>
-                <!-- Пункт 3: Полевые условия -->
                 <li class="features__item">
                     <div class="features__icon-wrapper">
-                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4 19.5C4 19.5 6 21.5 12 16.5C18 11.5 20 12.5 20 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 8L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 3V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
                     </div>
-                    <span class="features__text">Для полевых условий</span>
-                </li>
-                <!-- Пункт 4: Адаптеры -->
-                <li class="features__item">
-                    <div class="features__icon-wrapper">
-                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M16 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M3 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <span class="features__text">Быстросъёмные адаптеры</span>
-                </li>
-                <!-- Пункт 5: Модульность -->
-                <li class="features__item">
-                    <div class="features__icon-wrapper">
-                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                            <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                            <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
-                            <path d="M3 14H10V21H3V14Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                    <span class="features__text">Модульная схема</span>
+                    <span class="features__text">Адаптеры</span>
                 </li>
             </ul>
         </section>
-
-        <!-- Область применения -->
-        <section class="section scopes">
-            <div class="section__header">
-                <h2 class="section__title">Область применения</h2>
-            </div>
-            <div class="scopes__grid">
-                <div class="scopes__card">Фермерские хозяйства</div>
-                <div class="scopes__card">Аграрные предприятия</div>
-                <div class="scopes__card">Сервисные центры</div>
-                <div class="scopes__card">Аграрные ВУЗы</div>
-            </div>
+        
+        <!-- ОБЛАСТИ -->
+        <section class="section">
+             <div class="section__header"><h2 class="section__title">Применение</h2></div>
+             <div class="scopes__grid">
+                 <div class="scopes__card">Фермерские хозяйства</div>
+                 <div class="scopes__card">Агрохолдинги</div>
+                 <div class="scopes__card">Сервисы</div>
+                 <div class="scopes__card">ВУЗы</div>
+             </div>
+        </section>
+        
+        <!-- ПАРТНЕРЫ -->
+        <section id="partners" class="section">
+             <div class="section__header"><h2 class="section__title">Партнеры</h2></div>
+             <div class="partners__item">
+                 <div class="partners__logo-box">Фонд Содействия</div>
+                 <p style="font-size: 14px; max-width: 600px;">
+                    Проект создан при поддержке ФГБУ «Фонд содействия развитию малых форм предприятий в научно-технической сфере» в рамках программы «Студенческий стартап».
+                 </p>
+             </div>
+             <div class="partners__item">
+                 <div class="partners__logo-box">Платформа</div>
+                 <p style="font-size: 14px; max-width: 600px;">
+                    Платформа университетского технологического предпринимательства
+                 </p>
+             </div>
         </section>
 
-        <!-- Партнеры -->
-        <section id="partners" class="section partners">
-            <div class="section__header">
-                <h2 class="section__title">Партнёры</h2>
-            </div>
-            <div class="partners__list">
-                <!-- Партнер 1 -->
-                <div class="partners__item">
-                    <div class="partners__logo-box">Лого 1</div>
-                    <p class="partners__desc">
-                        Проект создан при поддержке ФГБУ «Фонд содействия развитию малых форм предприятий в научно-технической сфере» в рамках программы «Студенческий стартап» Федерального проекта «Платформа университетского технологического предпринимательства».
-                    </p>
-                </div>
-                <!-- Партнер 2 -->
-                <div class="partners__item">
-                    <div class="partners__logo-box">Лого 2</div>
-                    <p class="partners__desc">
-                        Платформа университетского технологического предпринимательства
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Контакты -->
-        <section id="contacts" class="section contacts">
+        <!-- КОНТАКТЫ -->
+        <section id="contacts" class="section" style="padding: 0; border-top: none;">
             <div class="contacts__grid">
-                <!-- Левая колонка -->
                 <div class="contacts__info">
-                    <h2 class="section__title">Контакты</h2>
-                    
+                    <h2 class="section__title" style="text-align: left;">Контакты</h2>
                     <div class="contacts__person">
-                        <p class="contacts__label">Контактное лицо:</p>
+                        <p style="color:#666; font-size:14px; margin-bottom: 5px;">Контактное лицо:</p>
                         <p class="contacts__value">Буряченко Даниил Владимирович</p>
-                        <a href="mailto:daniil_buryachenko@mail.ru" class="contacts__link">daniil_buryachenko@mail.ru</a>
-                        <a href="tel:+79873618534" class="contacts__link">+7 987 361 85 34</a>
+                        <a href="mailto:daniil_buryachenko@mail.ru" style="color:#000; font-size:18px; display:block; margin-bottom:5px; word-break: break-all;">daniil_buryachenko@mail.ru</a>
+                        <a href="tel:+79873618534" style="color:#000; font-size:20px;">+7 987 361 85 34</a>
                     </div>
-
-                    <div class="contacts__legal">
-                        <p class="contacts__company">ООО "Технет Фарм"</p>
-                        <ul class="contacts__details">
-                            <li>ОГРН: 1256400011405</li>
-                            <li>ИНН: 6449111483</li>
-                            <li>КПП: 644901001</li>
-                            <li>Адрес: 413100, Саратовская область, г. Энгельс, ул. Красноармейская, д. 34</li>
-                        </ul>
+                    <div style="margin-top:30px;">
+                        <p><strong>ООО "Технет Фарм"</strong></p>
+                        <p style="color:#666; font-size: 14px;">Саратовская область, г. Энгельс, ул. Красноармейская, д. 34</p>
+                        <p style="color:#666; font-size: 12px; margin-top: 10px;">
+                            ИНН: 6449111483 / КПП: 644901001
+                        </p>
                     </div>
                 </div>
-
-                <!-- Правая колонка (Карта) -->
-                <div class="contacts__map">
-                    <!-- Заглушка для карты (вставьте сюда реальный iframe Яндекса) -->
-                    <iframe src="https://yandex.ru/map-widget/v1/?ll=46.115866%2C51.493630&z=17" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="border-radius: 20px;"></iframe>
+                <div class="contacts__map-wrapper" style="background:#ddd; min-height:400px;">
+                    <iframe src="https://yandex.ru/map-widget/v1/?ll=46.115866%2C51.493630&z=17" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="min-height: 400px; display: block;"></iframe>
                 </div>
             </div>
         </section>
 
-        <!-- Футер -->
         <footer class="footer">
-            <div class="footer__content">
-                <p class="footer__copyright">© 2025 ООО "Технет Фарм". Все права защищены.</p>
-            </div>
+            © 2025 ООО "Технет Фарм"
         </footer>
 
     </main>
+
+    <!-- СКРИПТЫ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- СЛАЙДЕР ---
+            const images = [
+                "https://placehold.co/800x600/333333/FFFFFF/png?text=Device+1",
+                "https://placehold.co/800x600/444444/FFFFFF/png?text=Device+2",
+                "https://placehold.co/800x600/555555/FFFFFF/png?text=Interface",
+                "https://placehold.co/800x600/666666/FFFFFF/png?text=Connectors"
+            ];
+            let currentIndex = 0;
+            const imgElement = document.getElementById('sliderImage');
+            const dotsContainer = document.getElementById('sliderDots');
+
+            // Создаем точки
+            images.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => { currentIndex = index; updateSlider(); });
+                dotsContainer.appendChild(dot);
+            });
+            const dots = document.querySelectorAll('.slider-dot');
+
+            function updateSlider() {
+                imgElement.classList.add('fade');
+                setTimeout(() => {
+                    imgElement.src = images[currentIndex];
+                    setTimeout(() => imgElement.classList.remove('fade'), 50);
+                }, 200);
+                dots.forEach(d => d.classList.remove('active'));
+                dots[currentIndex].classList.add('active');
+            }
+
+            document.getElementById('nextBtn').addEventListener('click', () => {
+                currentIndex++; if (currentIndex >= images.length) currentIndex = 0;
+                updateSlider();
+            });
+            document.getElementById('prevBtn').addEventListener('click', () => {
+                currentIndex--; if (currentIndex < 0) currentIndex = images.length - 1;
+                updateSlider();
+            });
+            imgElement.src = images[0];
+
+
+            // --- БУРГЕР МЕНЮ ---
+            const burgerBtn = document.getElementById('burgerBtn');
+            const navMenu = document.getElementById('navMenu');
+            const navLinks = document.querySelectorAll('.header__link');
+
+            // Открыть/Закрыть по кнопке
+            burgerBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                
+                // Анимация бургера (крестик)
+                const spans = burgerBtn.querySelectorAll('span');
+                if (navMenu.classList.contains('active')) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.opacity = '0';
+                    spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                }
+            });
+
+            // Закрыть при клике на ссылку
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('active');
+                    // Сброс иконки бургера
+                    const spans = burgerBtn.querySelectorAll('span');
+                    spans[0].style.transform = 'none';
+                    spans[1].style.opacity = '1';
+                    spans[2].style.transform = 'none';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
