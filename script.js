@@ -1,81 +1,80 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    /* -------------------------------------------
-       1. ЛОГИКА СЛАЙДЕРА (CAROUSEL)
-    ------------------------------------------- */
-    const track = document.querySelector('.slider__track');
-    // Превращаем NodeList в Array для удобства
-    const items = Array.from(document.querySelectorAll('.slider__item')); 
+    // Массив с вашими локальными картинками
+    const images = [
+        "img/1-ref.png",
+        "img/2-ref.png",
+        "img/3-ref.png",
+        "img/4-ref.png"
+    ];
     
-    if (track && items.length > 0) {
-        let currentIndex = 0; // Индекс активного слайда
+    let currentIndex = 0;
+    const imgElement = document.getElementById('sliderImage');
+    const dotsContainer = document.getElementById('sliderDots');
 
-        function updateSlider() {
-            // А. Сбрасываем активный класс у всех
-            items.forEach(item => item.classList.remove('active'));
-            
-            // Б. Назначаем активный класс текущему слайду
-            const activeSlide = items[currentIndex];
-            activeSlide.classList.add('active');
+    // Генерация точек навигации
+    images.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('slider-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => { currentIndex = index; updateSlider(); });
+        dotsContainer.appendChild(dot);
+    });
+    const dots = document.querySelectorAll('.slider-dot');
 
-            // В. Вычисляем смещение трека для центрирования активного слайда
-            // Центр видимой области слайдера (контейнера)
-            const containerCenter = track.parentElement.offsetWidth / 2;
-            
-            // Центр самого слайда (половина его ширины)
-            const slideCenter = activeSlide.offsetWidth / 2;
-            
-            // Позиция левого края слайда относительно начала трека
-            const slideLeftPos = activeSlide.offsetLeft;
-            
-            // Формула сдвига: (ЦентрКонтейнера) - (ПозицияСлайда + ПоловинаШирины)
-            // Это двигает трек так, чтобы центр слайда совпал с центром экрана
-            const moveAmount = containerCenter - (slideLeftPos + slideCenter);
-
-            track.style.transform = `translateX(${moveAmount}px)`;
-        }
-
-        // Г. Вешаем события клика на каждый слайд
-        items.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentIndex = index;
-                updateSlider();
-            });
-        });
-
-        // Д. Инициализация при загрузке (с задержкой для рендера CSS)
-        setTimeout(updateSlider, 100);
-
-        // Е. Пересчет при изменении размера окна (чтобы центр не сбивался)
-        window.addEventListener('resize', () => {
-            requestAnimationFrame(updateSlider);
-        });
+    // Функция обновления слайдера
+    function updateSlider() {
+        imgElement.classList.add('fade');
+        setTimeout(() => {
+            imgElement.src = images[currentIndex];
+            setTimeout(() => imgElement.classList.remove('fade'), 50);
+        }, 200);
+        dots.forEach(d => d.classList.remove('active'));
+        dots[currentIndex].classList.add('active');
     }
 
-    /* -------------------------------------------
-       2. ПЛАВНЫЙ СКРОЛЛ К ЯКОРЯМ
-    ------------------------------------------- */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault(); // Отменяем стандартный резкий прыжок
-            
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                // Высота шапки + небольшой отступ
-                const headerOffset = 100; 
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    // Обработчики кнопок
+    document.getElementById('nextBtn').addEventListener('click', () => {
+        currentIndex++; if (currentIndex >= images.length) currentIndex = 0;
+        updateSlider();
+    });
+    document.getElementById('prevBtn').addEventListener('click', () => {
+        currentIndex--; if (currentIndex < 0) currentIndex = images.length - 1;
+        updateSlider();
+    });
+    
+    // Загрузка первой картинки
+    imgElement.src = images[0];
+
+    // --- БУРГЕР МЕНЮ ---
+    const burgerBtn = document.getElementById('burgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.header__link');
+
+    burgerBtn.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const spans = burgerBtn.querySelectorAll('span');
         
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
-                });
-            }
-        });
+        // Анимация крестика
+        if (navMenu.classList.contains('active')) {
+            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+            spans[1].style.opacity = '0';
+            spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        }
     });
 
+    // Закрытие при клике на ссылку
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            const spans = burgerBtn.querySelectorAll('span');
+            spans[0].style.transform = 'none';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = 'none';
+        });
+    });
 });
