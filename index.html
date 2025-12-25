@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АгроДиагност — Диагностическое оборудование</title>
+    <!-- Подключение шрифтов Space Grotesk и Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page">
+
+    <main class="page__container">
+        
+        <!-- Шапка -->
+        <header class="header">
+            <div class="header__logo">АГРОДИАГНОСТ</div>
+            <nav class="header__nav">
+                <a href="#product" class="header__link">О продукте</a>
+                <a href="#features" class="header__link">Преимущества</a>
+                <a href="#partners" class="header__link">Партнёры</a>
+                <a href="#contacts" class="header__link">Контакты</a>
+            </nav>
+        </header>
+
+        <!-- Hero блок -->
+        <section class="hero">
+            <div class="hero__overlay"></div> <!-- Затемнение/осветление для читаемости -->
+            <div class="hero__content">
+                <h1 class="hero__title">АГРОДИАГНОСТ</h1>
+                <p class="hero__subtitle">
+                    Диагностическое оборудование<br>
+                    для сельскохозяйственной техники
+                </p>
+            </div>
+        </section>
+
+        <!-- О продукте + Слайдер -->
+        <section id="product" class="section about">
+            <div class="section__header">
+                <h2 class="section__title">О продукте</h2>
+            </div>
+            <div class="about__content">
+                <p class="about__text">
+                    «АгроДиагност» направлен на разработку отечественного диагностического устройства для электрических систем сельскохозяйственной техники.
+                    Устройство предназначено для диагностики электросистем тракторов, комбайнов и другой мобильной техники, что делает его востребованным в агропромышленном комплексе, где важно обеспечить бесперебойную работу машин в сезон полевых работ.
+                </p>
+                
+                <!-- Простой CSS-слайдер (горизонтальный скролл) -->
+                <div class="slider">
+                    <div class="slider__track">
+                        <div class="slider__item">Фото устройства 1</div>
+                        <div class="slider__item">Фото устройства 2</div>
+                        <div class="slider__item">Фото устройства 3</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Преимущества -->
+        <section id="features" class="section features">
+            <div class="section__header">
+                <h2 class="section__title">Преимущества решения</h2>
+            </div>
+            <ul class="features__list">
+                <!-- Пункт 1: Интерфейс -->
+                <li class="features__item">
+                    <div class="features__icon-wrapper">
+                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="features__text">Удобный интерфейс</span>
+                </li>
+                <!-- Пункт 2: Безопасность -->
+                <li class="features__item">
+                    <div class="features__icon-wrapper">
+                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="features__text">Безопасное подключение</span>
+                </li>
+                <!-- Пункт 3: Полевые условия -->
+                <li class="features__item">
+                    <div class="features__icon-wrapper">
+                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 19.5C4 19.5 6 21.5 12 16.5C18 11.5 20 12.5 20 12.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 8L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M12 3V5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="features__text">Для полевых условий</span>
+                </li>
+                <!-- Пункт 4: Адаптеры -->
+                <li class="features__item">
+                    <div class="features__icon-wrapper">
+                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M16 3V21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 7H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M3 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <span class="features__text">Быстросъёмные адаптеры</span>
+                </li>
+                <!-- Пункт 5: Модульность -->
+                <li class="features__item">
+                    <div class="features__icon-wrapper">
+                        <svg class="features__icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/>
+                            <path d="M3 14H10V21H3V14Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="features__text">Модульная схема</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Область применения -->
+        <section class="section scopes">
+            <div class="section__header">
+                <h2 class="section__title">Область применения</h2>
+            </div>
+            <div class="scopes__grid">
+                <div class="scopes__card">Фермерские хозяйства</div>
+                <div class="scopes__card">Аграрные предприятия</div>
+                <div class="scopes__card">Сервисные центры</div>
+                <div class="scopes__card">Аграрные ВУЗы</div>
+            </div>
+        </section>
+
+        <!-- Партнеры -->
+        <section id="partners" class="section partners">
+            <div class="section__header">
+                <h2 class="section__title">Партнёры</h2>
+            </div>
+            <div class="partners__list">
+                <!-- Партнер 1 -->
+                <div class="partners__item">
+                    <div class="partners__logo-box">Лого 1</div>
+                    <p class="partners__desc">
+                        Проект создан при поддержке ФГБУ «Фонд содействия развитию малых форм предприятий в научно-технической сфере» в рамках программы «Студенческий стартап» Федерального проекта «Платформа университетского технологического предпринимательства».
+                    </p>
+                </div>
+                <!-- Партнер 2 -->
+                <div class="partners__item">
+                    <div class="partners__logo-box">Лого 2</div>
+                    <p class="partners__desc">
+                        Платформа университетского технологического предпринимательства
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Контакты -->
+        <section id="contacts" class="section contacts">
+            <div class="contacts__grid">
+                <!-- Левая колонка -->
+                <div class="contacts__info">
+                    <h2 class="section__title">Контакты</h2>
+                    
+                    <div class="contacts__person">
+                        <p class="contacts__label">Контактное лицо:</p>
+                        <p class="contacts__value">Буряченко Даниил Владимирович</p>
+                        <a href="mailto:daniil_buryachenko@mail.ru" class="contacts__link">daniil_buryachenko@mail.ru</a>
+                        <a href="tel:+79873618534" class="contacts__link">+7 987 361 85 34</a>
+                    </div>
+
+                    <div class="contacts__legal">
+                        <p class="contacts__company">ООО "Технет Фарм"</p>
+                        <ul class="contacts__details">
+                            <li>ОГРН: 1256400011405</li>
+                            <li>ИНН: 6449111483</li>
+                            <li>КПП: 644901001</li>
+                            <li>Адрес: 413100, Саратовская область, г. Энгельс, ул. Красноармейская, д. 34</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Правая колонка (Карта) -->
+                <div class="contacts__map">
+                    <!-- Заглушка для карты (вставьте сюда реальный iframe Яндекса) -->
+                    <iframe src="https://yandex.ru/map-widget/v1/?ll=46.115866%2C51.493630&z=17" width="100%" height="100%" frameborder="0" allowfullscreen="true" style="border-radius: 20px;"></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Футер -->
+        <footer class="footer">
+            <div class="footer__content">
+                <p class="footer__copyright">© 2025 ООО "Технет Фарм". Все права защищены.</p>
+            </div>
+        </footer>
+
+    </main>
+</body>
+</html>

@@ -1,0 +1,424 @@
+:root {
+    --bg-page: #F0F2F5;       /* Чуть темнее белого */
+    --bg-card: #FFFFFF;       /* Белый для контента */
+    --accent-acid: #DFFF00;   /* Светло-кислотный желтый */
+    --text-main: #0F0F0F;     /* Черный текст */
+    --text-gray: #555555;
+    --black: #000000;
+    
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    
+    --radius-main: 24px;
+    --radius-small: 12px;
+}
+
+/* Сброс и базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    /* Чтобы "страничка" была по центру по вертикали, если контента мало, но у нас его много */
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+/* Ограничитель ширины (страница на экране) */
+.page__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: var(--bg-card);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-main); /* Скругление углов самой "страницы" */
+    overflow: hidden; /* Чтобы дети не вылезали за радиус */
+    position: relative;
+}
+
+/* ============ ШАПКА ============ */
+.header {
+    background-color: var(--accent-acid);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-left-radius: var(--radius-main);
+    border-bottom-right-radius: var(--radius-main);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header__logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+}
+
+.header__nav {
+    display: flex;
+    gap: 30px;
+}
+
+.header__link {
+    text-decoration: none;
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 16px;
+    transition: opacity 0.2s;
+}
+
+.header__link:hover {
+    opacity: 0.6;
+}
+
+/* ============ HERO БЛОК ============ */
+.hero {
+    position: relative; /* Чтобы позиционировать текст и подложку */
+    min-height: 600px;  /* Делаем блок высоким */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Центрируем текст по вертикали */
+    padding: 60px 40px;
+    
+    /* Настройки фона */
+    /* ЗАМЕНИТЕ 'image.jpg' НА ПУТЬ К ВАШЕМУ ФОТО */
+    background-image: url('https://images.unsplash.com/photo-1625246333195-58197bd47f26?auto=format&fit=crop&w=1400&q=80'); 
+    background-size: cover;   /* Растягиваем фото на весь блок */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    overflow: hidden; /* Чтобы размытие или эффекты не вылезали */
+}
+
+/* Полупрозрачный слой, чтобы черный текст читался на любом фото */
+.hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Градиент от белого (слева) к прозрачному (справа) 
+       Создает эффект "технологичной чистоты" и дает контраст тексту */
+    background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.4) 100%);
+    z-index: 1;
+}
+
+/* Контейнер для текста поднимаем выше слоя overlay */
+.hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px; /* Ограничиваем ширину текста, чтобы не растягивался на все фото */
+}
+
+.hero__title {
+    font-family: var(--font-heading);
+    font-size: 80px; /* Сделал заголовок крупнее для масштаба */
+    line-height: 0.9;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: var(--black);
+}
+
+.hero__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-main);
+    background: rgba(223, 255, 0, 0.3); /* Легкий акцентный фон под текстом (кислотный желтый) */
+    padding: 10px 0; /* Небольшие отступы, если фон виден */
+    display: inline-block; /* Фон только под текстом */
+    backdrop-filter: blur(5px); /* Модный эффект размытия (glassmorphism) */
+}
+
+/* Адаптив для Hero */
+@media (max-width: 768px) {
+    .hero {
+        min-height: 400px;
+        padding: 40px 20px;
+    }
+    .hero__title {
+        font-size: 48px;
+    }
+    .hero__subtitle {
+        font-size: 18px;
+    }
+}
+
+
+/* ============ ОБЩИЕ СЕКЦИИ ============ */
+.section {
+    padding: 60px 40px;
+    border-top: 1px solid #EEEEEE;
+}
+
+.section__title {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+/* ============ О ПРОДУКТЕ ============ */
+.about__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.about__text {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Простой слайдер */
+.slider {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: var(--radius-small);
+}
+
+.slider__track {
+    display: flex;
+    gap: 20px;
+    padding-bottom: 10px;
+}
+
+.slider__item {
+    min-width: 300px;
+    height: 200px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-small);
+    border: 1px solid #ddd;
+}
+
+/* ============ ПРЕИМУЩЕСТВА ============ */
+.features__list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.features__item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #FAFAFA;
+    padding: 15px 25px;
+    border-radius: 50px; /* Полное скругление ("таблетка") */
+    border: 1px solid #E0E0E0;
+}
+
+.features__icon-wrapper {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-acid); /* Фон как у шапки */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.features__icon {
+    width: 20px;
+    height: 20px;
+    color: var(--black); /* Сама иконка черная */
+}
+
+.features__text {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* ============ ОБЛАСТИ ПРИМЕНЕНИЯ ============ */
+.scopes__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.scopes__card {
+    padding: 30px;
+    background: #FAFAFA;
+    border: 1px solid #E0E0E0;
+    border-radius: var(--radius-small);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.scopes__card:hover {
+    background: var(--accent-acid);
+    border-color: var(--accent-acid);
+    transform: translateY(-5px);
+}
+
+/* ============ ПАРТНЕРЫ ============ */
+.partners__list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.partners__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.partners__logo-box {
+    width: 150px;
+    height: 100px;
+    background: #EEE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-small);
+    font-size: 12px;
+    color: #888;
+    flex-shrink: 0;
+}
+
+.partners__desc {
+    font-size: 14px;
+    color: var(--text-gray);
+    max-width: 800px;
+}
+
+/* ============ КОНТАКТЫ ============ */
+.contacts__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0; /* Без gap, так как карта должна стыковаться или иметь свой паддинг */
+    border-radius: var(--radius-main);
+    overflow: hidden;
+    background: #FAFAFA;
+}
+
+.contacts__info {
+    padding: 40px;
+}
+
+.contacts__person {
+    margin-bottom: 40px;
+}
+
+.contacts__label {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 5px;
+}
+
+.contacts__value {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.contacts__link {
+    display: block;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid transparent;
+    width: fit-content;
+}
+
+.contacts__link:hover {
+    border-bottom-color: var(--accent-acid);
+    background-color: var(--accent-acid);
+}
+
+.contacts__company {
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.contacts__details {
+    list-style: none;
+    font-size: 14px;
+    color: var(--text-gray);
+}
+
+.contacts__details li {
+    margin-bottom: 5px;
+}
+
+.contacts__map {
+    position: relative;
+    min-height: 400px;
+}
+
+/* iframe внутри карты */
+.contacts__map iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ============ ФУТЕР ============ */
+.footer {
+    background-color: var(--black);
+    color: #FFF;
+    padding: 30px 40px;
+    text-align: center;
+}
+
+.footer__copyright {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* ============ АДАПТИВНОСТЬ ============ */
+@media (max-width: 992px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+    .about__content {
+        grid-template-columns: 1fr;
+    }
+    .contacts__grid {
+        grid-template-columns: 1fr;
+    }
+    .contacts__map {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .header__nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .hero__title {
+        font-size: 40px;
+    }
+    .partners__item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
